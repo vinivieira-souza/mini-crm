@@ -42,7 +42,7 @@ export function FinalStep({ isActive }: { isActive: boolean }) {
             <>
                 Excelente, <strong>{savedData.name}</strong>! <br /><br />
                 Já recebi todo o escopo por aqui. Vamos analisar os detalhes do seu projeto com cuidado para entender a melhor arquitetura para o seu momento. <br /><br />
-                Em breve, um de nossos especialistas vai te chamar diretamente no WhatsApp ou e-mail para darmos o próximo passo.
+                Em breve, um de nossos especialistas vai te chamar diretamente no <span className="font-bold text-green-600/80">WhatsApp</span> ou <span className="font-bold text-blue-300">e-mail</span> para darmos o próximo passo.
             </>
         ),
         'Avaliar melhor': (
@@ -82,7 +82,7 @@ export function FinalStep({ isActive }: { isActive: boolean }) {
                         <AvatarFallback className="bg-gray-900 text-gray-100">NV</AvatarFallback>
                     </Avatar>
                     <div className="bg-white p-4 rounded-2xl rounded-bl-none shadow-sm border border-gray-100 text-gray-800">
-                        Aguarde alguns instantes para ser redirecioando a nossa página principal.
+                        Aguarde alguns instantes para ser redirecionado a nossa página principal.
                     </div>
                 </div>
             </TypingEffect>

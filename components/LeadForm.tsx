@@ -18,9 +18,17 @@ export function LeadForm() {
     const chatHistory = useFormStore((state) => state.chatHistory);
 
     const bottomRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
-        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [chatHistory.length]);
+        if (!contentRef.current) return;
+
+        const observer = new ResizeObserver(() => {
+            bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        });
+        observer.observe(contentRef.current);
+
+        return () => observer.disconnect();
+    }, []);
 
     const currentStep = chatHistory[chatHistory.length - 1];
     let progressPercentage = 20;
@@ -60,7 +68,7 @@ export function LeadForm() {
             </header>
 
             <main className="flex-1 overflow-y-auto p-4 md:p-6 pb-24">
-                <div className="max-w-2xl mx-auto flex flex-col gap-6 md:max-w-3xl md:pr-12">
+                <div ref={contentRef} className="max-w-2xl mx-auto flex flex-col gap-6 md:max-w-3xl md:pr-12">
                     <div className="flex gap-4 items-end animate-in fade-in slide-in-from-bottom-2 duration-500">
                         <Avatar>
                             <AvatarFallback className="bg-gray-900 text-gray-100">NV</AvatarFallback>
