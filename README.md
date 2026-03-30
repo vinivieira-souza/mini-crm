@@ -47,6 +47,37 @@ Dashboard (Visão da Agência): http://localhost:3000/dashboard
 
 ---
 
+## 🐳 Como rodar com Docker
+
+### Pré-requisitos
+- Docker
+- Docker Compose (plugin `docker compose`)
+
+### Subindo em produção local com containers
+```bash
+docker compose up --build -d
+```
+
+Esse processo faz o seguinte automaticamente:
+- constrói a imagem da aplicação Next.js;
+- executa `prisma migrate deploy` no startup do container;
+- sobe a aplicação em `http://localhost:3000`;
+- persiste o banco SQLite em um volume Docker (`mini_crm_data`).
+
+### Comandos úteis
+```bash
+# Ver logs da aplicação
+docker compose logs -f app
+
+# Parar os containers
+docker compose down
+
+# Parar e remover também o volume do banco
+docker compose down -v
+```
+
+---
+
 ## 🗄️ Acessando os dados brutos (Prisma Studio)
 Caso queira ver o banco de dados cru (sem ser pela interface do Dashboard), você pode abrir o painel nativo do Prisma:
 
