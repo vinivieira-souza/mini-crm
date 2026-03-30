@@ -5,13 +5,15 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 import { ReactNode, useEffect, useState } from "react";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "../ui/drawer";
 import { Spinner } from "../ui/spinner";
+import { TypingEffect } from "../typingWrapper";
 
-export function FinalStep() {
+export function FinalStep({ isActive }: { isActive: boolean }) {
     const savedData = useFormStore((state) => state.formData);
     const resetForm = useFormStore((state) => state.resetForm);
 
     const [showDrawer, setShowDrawer] = useState(false);
     const [countdown, setCountdown] = useState(3);
+    const [showNextMessage, setShowNextMessage] = useState(!isActive);
 
     useEffect(() => {
         const initialDelay = setTimeout(() => {
@@ -61,16 +63,30 @@ export function FinalStep() {
 
     return (
         <div className="flex flex-col gap-4 w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="flex gap-4 items-end">
-                <Avatar>
-                    <AvatarFallback className="bg-gray-900 text-gray-100">NV</AvatarFallback>
-                </Avatar>
-                {savedData.budget && (
+            <TypingEffect delay={1200} isHistorical={!isActive} onComplete={() => setShowNextMessage(true)}>
+                <div className="flex gap-4 items-end">
+                    <Avatar>
+                        <AvatarFallback className="bg-gray-900 text-gray-100">NV</AvatarFallback>
+                    </Avatar>
+                    {savedData.budget && (
+                        <div className="bg-white p-4 rounded-2xl rounded-bl-none shadow-sm border border-gray-100 text-gray-800">
+                            {finalTexts[savedData.budget]}
+                        </div>
+                    )}
+                </div>
+            </TypingEffect>
+            { showNextMessage && (
+                <TypingEffect delay={1200} isHistorical={!isActive}>
+                <div className="flex gap-4 items-end">
+                    <Avatar>
+                        <AvatarFallback className="bg-gray-900 text-gray-100">NV</AvatarFallback>
+                    </Avatar>
                     <div className="bg-white p-4 rounded-2xl rounded-bl-none shadow-sm border border-gray-100 text-gray-800">
-                        {finalTexts[savedData.budget]}
+                        Aguarde alguns instantes para ser redirecioando a nossa página principal.
                     </div>
-                )}
-            </div>
+                </div>
+            </TypingEffect>
+            )}
             <Drawer open={showDrawer} onOpenChange={setShowDrawer} >
                 <DrawerContent className="bg-black">
                     <div className="mx-auto w-full max-w-sm flex flex-col items-center pb-8 pt-4">

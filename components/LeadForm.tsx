@@ -105,11 +105,7 @@ export function LeadForm() {
                             case "budget":
                                 return <StepBudget key={stepId} isActive={isActive} />
                             case "final":
-                                return (
-                                    <TypingEffect key={stepId} delay={1200} isHistorical={!isActive} >
-                                        <FinalStep />
-                                    </TypingEffect>
-                                )
+                                return <FinalStep key={stepId} isActive={isActive} />
                             default:
                                 return null
                         }

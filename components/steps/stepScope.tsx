@@ -11,8 +11,7 @@ export function StepScope({ isActive }: { isActive: boolean }) {
     const setFormData = useFormStore((state) => state.setFormData)
     const addNextStep = useFormStore((state) => state.addNextStep)
     const backPrevStep = useFormStore((state) => state.backPrevStep)
-    const projectScope = useFormStore((state) => state.formData.projectScope)
-    const clientName = useFormStore((state) => state.formData.name)
+    const savedData = useFormStore((state) => state.formData);
 
     const handleSelect = (select: ProjectScope) => {
         setFormData({ projectScope: select })
@@ -29,7 +28,7 @@ export function StepScope({ isActive }: { isActive: boolean }) {
                         <AvatarFallback className="bg-gray-900 text-gray-100">NV</AvatarFallback>
                     </Avatar>
                     <div className="bg-white p-4 rounded-2xl rounded-bl-none shadow-sm border border-gray-100 text-gray-800">
-                        Certo, {clientName}! Agora, vamos entender melhor seu projeto.
+                        Certo, { savedData.name }! Agora, vamos entender melhor seu projeto.
                     </div>
                 </div>
             </TypingEffect>
@@ -61,10 +60,10 @@ export function StepScope({ isActive }: { isActive: boolean }) {
                 </TypingEffect>
             )}
 
-            {!isActive && projectScope && (
+            {!isActive && savedData.projectScope && (
                 <div className="flex justify-end w-full pl-12 animate-in fade-in zoom-in-95">
                     <div className="bg-black text-gray-100 p-4 rounded-2xl rounded-br-none shadow-md max-w-[90%] text-sm leading-relaxed">
-                        <p className="font-bold">{projectScope === 'Empresarial'
+                        <p className="font-bold">{ savedData.projectScope === 'Empresarial'
                             ? 'Demanda empresarial'
                             : 'Demanda pessoal'
                         }</p>

@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 import { estimateCalc } from "@/lib/estimateCalc";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "../ui/button";
+import { createLead } from "@/actions/lead";
 
 export function StepBudget({ isActive }: { isActive: boolean }) {
     const setFormData = useFormStore((state) => state.setFormData);
@@ -14,8 +15,22 @@ export function StepBudget({ isActive }: { isActive: boolean }) {
     const backPrevStep = useFormStore((state) => state.backPrevStep);
     const savedData = useFormStore((state) => state.formData);
 
-    const handleSelect = (select: Budget) => {
+    const handleSelect = async (select: Budget) => {
         setFormData({ budget: select });
+
+        const completeLeadData = {
+            ...savedData,
+            budget: select
+        };
+
+        if (select !== 'Não interessado') {
+            try {
+                await createLead(completeLeadData);
+            } catch (error) {
+                console.error("Falha ao salvar no banco:", error);
+            }
+        }
+
         addNextStep('final');
     }
 
