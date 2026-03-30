@@ -1,0 +1,17 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mini-crm-app
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: file:/app/data/dev.db
+    volumes:
+      - mini_crm_data:/app/data
+    restart: unless-stopped
+
+volumes:
+  mini_crm_data:
